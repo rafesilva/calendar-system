@@ -10,9 +10,9 @@ import Board from '../components/Board'
 import SignUp from '../components/SignUpForm'
 // import BookInfo from '../components/BookInfo';
 
-// const url = 'https://calendar-booking-api.herokuapp.com'
+const url = 'https://calendar-booking-api.herokuapp.com'
 
-const url = 'http://localhost:4000'
+// const url = 'http://localhost:4000'
 
 
 export default class Checkout extends Component {

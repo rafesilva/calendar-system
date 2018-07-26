@@ -5,8 +5,9 @@ import BookInfo from '../components/BookInfo';
 import {Row, Col} from 'reactstrap';
 import { withRouter } from 'react-router';
 import axios from 'axios'
+const url = 'https://calendar-booking-api.herokuapp.com'
 
-    const url = 'http://localhost:4000'
+    // const url = 'http://localhost:4000'
 
 class BookCal extends Component {
   constructor(props){

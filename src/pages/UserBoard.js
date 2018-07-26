@@ -5,8 +5,8 @@ import "./UserBoard.css";
 import Board from "../components/Board";
 
 import axios from "axios"
-// const url = 'https://calendar-booking-api.herokuapp.com'
-const url = 'http://localhost:4000'
+const url = 'https://calendar-booking-api.herokuapp.com'
+// const url = 'http://localhost:4000'
 
 export default class UserBoard extends React.Component {
 
