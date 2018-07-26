@@ -111,7 +111,7 @@ validateLogout() {
       });
               console.log('ForgotPass E:', newValidation)
 
-    axios.post('http://localhost:4000/user/forgot', newValidation )
+    axios.post(url+'/user/forgot', newValidation )
     .then(res => {
     
 

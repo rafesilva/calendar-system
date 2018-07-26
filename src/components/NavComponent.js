@@ -28,15 +28,8 @@ class NavComponent extends React.Component {
 
 handleLogout = event => {
       localStorage.removeItem('token');
-          localStorage.removeItem('binfo');
-                localStorage.removeItem('uinfo');
+     
 
-
-
-     const tk = Object.assign({}, this.state, {
-        token: false     
-
-      })
   
     window.location.reload()
    };
@@ -78,10 +71,12 @@ handleLogout = event => {
                  <NavItem>
                   <NavLink href="/admin">Admin</NavLink>
                 </NavItem>
-                   </div>
-                   <NavItem>
-                  <NavLink href="/reset">Reset</NavLink>
+                 </div>
+                <div className={this.state.shouldHide ? '' : "hidden"}>
+                 <NavItem>
+                  <NavLink href="/login">Login</NavLink>
                 </NavItem>
+                   </div>
               <div className={this.state.shouldHide ? 'hidden' : ""}>
                     <NavItem>
                   <NavLink href="/user_board">User Board</NavLink>

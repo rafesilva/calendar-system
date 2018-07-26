@@ -37,7 +37,7 @@ export default class Checkout extends Component {
 
     };
   }
- componentDidMount(){
+ componentWillMount(){
    const token = localStorage.getItem('token');
               
   if (token != null) { this.setState({shouldHide: false}) }
