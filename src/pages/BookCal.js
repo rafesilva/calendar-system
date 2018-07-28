@@ -5,9 +5,9 @@ import BookInfo from '../components/BookInfo';
 import {Row, Col} from 'reactstrap';
 import { withRouter } from 'react-router';
 import axios from 'axios'
-const url = 'https://calendar-booking-api.herokuapp.com'
+// const url = 'https://calendar-booking-api.herokuapp.com'
 
-// const url = 'http://localhost:4000'
+const url = 'http://localhost:4000'
 
 class BookCal extends Component {
   constructor(props){
@@ -29,25 +29,36 @@ class BookCal extends Component {
 
  
   selectBooking (day,month,year) {
+    if (day !== undefined) {
     this.setState({
       day: day,
       month: month,
       year: year,
       available: "Available Timeslot :"
+
     })
+  } else {
+    this.setState({
+      day: 0,
+      month: 0,
+      year: 0,
+      available: "Available Timeslot :"
+
+    })
+  }
 }
 
   
 // function to pick the date in calendar
   onDatePicked = (d) => {
-    let duration = this.props.match.params.serviceDuration
+          let duration = this.props.match.params.serviceDuration
           let date = new Date(d);
           let year = date.getFullYear();
           let month = date.getMonth() + 1;
           let day = date.getDate();
           this.selectBooking(day,month,year);
           
-        let db = [11.30,14.30]
+      let db = [11.30,14.30]
          
        const used = [this.state.used]        
 
@@ -65,23 +76,26 @@ class BookCal extends Component {
         }   
          axios.get(url+'/dates/' + this.state.day + "/"  + this.state.month + "/" + this.state.year, config )
         .then( (res) => {    
-          const times = res.data.day.map(day => day)
-          console.log('times', times)
-          const t = times.map( d => d)
-          const time = t[0].time.time
-           if (time != null) { this.setState({used: time})} else {this.setState({used: []})}
-         
+          if (this.state.day === null) {this.setState({day: 0, month: 0, year: 0})}  else {
+              this.checkDate(res.data,duration,timeSlot,db) 
           
+          this.setState({day:this.state.day, month:this.state.month, year: this.state.year})
+           this.checkDate(res.data,duration,timeSlot,db) 
+           const times = res.data.day.map(day => day)
+            console.log('times', times)
+            const t = times.map( d => d)
+            if ( times.length > 0) { 
+            const time = t[0].time.time
+            console.log('time', time)
+            this.setState({used: time})
 
-          console.log({ 'res.data': res.data })
-          console.log('used', this.state.used )
-            console.log('data', res)
-          this.checkDate(res.data,duration,timeSlot,db) 
-         this.setState({date:this.state.date, month:this.state.month, year: this.state.year})
+             } 
 
-            console.log('used', this.state.used)
-
-        })
+             else { const time = [] 
+               console.log('time', time)
+              this.setState({used: time})
+            }
+        }})
        
        .catch(error => console.log('FORM COULD NOT GET', error))
 

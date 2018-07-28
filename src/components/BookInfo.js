@@ -45,16 +45,15 @@ class BookInfo extends Component {
             selectedTime: e.target.value,
             isActive: false
         })
+        console.log(this.state.selectedTime)
     }
     
     onChangeDay(){
 
 
-
-
     }
 
-    postOrder(){
+    postOrder() {
         const token = localStorage.getItem('token');
 
         let config = {
@@ -64,7 +63,6 @@ class BookInfo extends Component {
             _id: this.props._id,
               productName: this.props.productName,
               price: this.props.price,
-              date:`${this.props.day}/${this.props.month}/${this.props.year}`,
               time:this.state.selectedTime,
               duration: this.props.duration
           }
@@ -73,39 +71,28 @@ class BookInfo extends Component {
           
  axios.post(url+'/times', newData, config)
         .then((res) => { 
-
-          console.log('state time', newData)
           console.log('Time created: ', res.data);
 
           const newTime = Object.assign({}, this.state, { 
             timeId: res.data.createdTime._id,
-            date: this.state.date,
-            month: this.state.month, 
-            year: this.state.year
+            date: this.props.day,
+            month: this.props.month, 
+            year: this.props.year
           })
 
 
           axios.post(url+'/dates', newTime)
           .then((res) => { 
 
-            console.log('Data created: ', res.data);
+            console.log('Date created: ', res.data);
             window.alert('Booked', res)
             return window.location.href='/checkout'
  
-
           })
           .catch((err) => {console.log('err',err)})
         })
         
-
-        .catch((err) => 
-          {console.log('err',err)
-
-        });
       }
-        
-
-
 
 render(){
     

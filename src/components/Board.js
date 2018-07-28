@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Board.css";
 import axios from 'axios'
-const url = 'https://calendar-booking-api.herokuapp.com'
-// const url = 'http://localhost:4000'
+// const url = 'https://calendar-booking-api.herokuapp.com'
+const url = 'http://localhost:4000'
 
 
 export default class Board extends Component {
@@ -40,7 +40,7 @@ validateLogout() {
 
    handleForgot = event => {
       
-         window.location.href='/forgot';
+      window.location.href='/forgot';
 
 
    };
@@ -57,26 +57,26 @@ validateLogout() {
       console.log('LOGIN DATA:', res)
  
 
-       localStorage.setItem('uinfo', JSON.stringify(res))
-     
-
-      axios.get(url+'/user/'+res.data.id ).then( rr => {
-        console.log('rr',rr)
-        const r = rr 
-        // localStorage.setItem('uinfo', JSON.stringify(r))
-      })
-    
 
        localStorage.setItem('token', res.data.token);
-      
       this.setState({token: res.data.token, tokenPresent: true})
+
+
+      axios.get(url+'/user/'+res.data.id ).then( r => {
+        const userData = r 
+        localStorage.setItem('uinfo', JSON.stringify(userData))
+
+        console.log('userData', userData)
+      })
+     
+      
+                   window.location.reload();
 
     
 
 
     })
     .catch(Error)  
-                   window.location.reload();
 
      }
 

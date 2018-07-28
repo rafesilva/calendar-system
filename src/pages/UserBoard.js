@@ -1,12 +1,11 @@
 import React from "react";
 import "./UserBoard.css";
 
-
-import Board from "../components/Board";
+import OrderList from "../components/OrderList";
 
 import axios from "axios"
-const url = 'https://calendar-booking-api.herokuapp.com'
-// const url = 'http://localhost:4000'
+// const url = 'https://calendar-booking-api.herokuapp.com'
+const url = 'http://localhost:4000'
 
 export default class UserBoard extends React.Component {
 
@@ -21,24 +20,13 @@ export default class UserBoard extends React.Component {
     componentWillMount() {
     const newUserId = localStorage.getItem('uinfo');
 
- 
-
     const uid = JSON.parse(newUserId)
 
-      const newState = Object.assign({}, this.state, {
-        userId: uid.data._id 
-    });
 
-      this.setState({userId: uid.data._id});
-   console.log(this.state.userId)
-   }
-
-
-
-
-    render() {
-
-         const token = localStorage.getItem('token');
+      this.setState({userId: uid.data.id});
+      console.log(this.state.userId)
+   
+  const token = localStorage.getItem('token');
 
             let config = {
       
@@ -46,31 +34,45 @@ export default class UserBoard extends React.Component {
                      'Content-Type':'application/json',
                       'Authorization':'Bearer '+token  },
                   }      
- axios.get(url+'/orders/board/'+this.state.userId).then(res => {res
+ axios.get(url+'/orders/', config)
+ .then(res => {
+    const newOrders = res.data.orders.map((order, i) => {
+      console.log(res.data.orders)
+      console.log(order.doc.serviceId)
 
- 
-  console.log(res)
-  return localStorage.setItem('orders', JSON.stringify(res))
+        return {
+          _id: order.doc._id,
+          name: order.doc.serviceId.name,
+          description: order.doc.serviceId.description,
+          duration: order.doc.serviceId.duration,
+           
+           
+      };
+    });
 
- })
+      const newStateOrders = Object.assign({}, this.state, {
+        orders: newOrders
+    });
 
- const orders = localStorage.getItem('orders')   
- console.log('orders', orders) 
-const ordersParse = JSON.parse(orders)
- console.log(ordersParse.data.doc)        
-  const order = ordersParse.data.doc.map( doc => { 
-    return doc
-    })
-    return (
- ordersParse.data.doc.map( doc => 
-  
+      this.setState(newStateOrders);
+   })
+
+    .catch(error => console.log('BAD ORDERS', error))
+
+
+}
+    render() {
+
+       
    
-  <div>{doc._id} | {doc.serviceId.name}} | {doc.serviceId.description} | {doc.serviceId.duration} | {doc.serviceId.price}</div>
-   )
+    
+    return (
 
-    )
+   <OrderList keys={this.orders} orders={this.state.orders}/>
+  
+  
+     )
   }
-
 }
 
 

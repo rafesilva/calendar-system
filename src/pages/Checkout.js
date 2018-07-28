@@ -1,6 +1,6 @@
  
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "./Checkout.css";
 import axios from 'axios'
 
@@ -53,7 +53,7 @@ export default class Checkout extends Component {
     console.log('USER INFO',uk)
 
    
-    this.setState({ userId: uk.data._id, serviceId: bk._id })
+    // this.setState({ userId: uk.data._id, serviceId: bk._id })
   
  
   }
@@ -95,9 +95,6 @@ validateFormSignup() {
     const bkk = localStorage.getItem('binfo')
     const bk = JSON.parse(bkk)
 
-    const ukk = localStorage.getItem('uinfo')
-
-    const uk = JSON.parse(ukk)
     
     return (
       <div className="board">

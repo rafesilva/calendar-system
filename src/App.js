@@ -9,6 +9,7 @@ import Services from './pages/Services';
 import AdminBoard from './pages/AdminBoard';
 import UserBoard from './pages/UserBoard';
 
+import Board from './components/Board';
 import Reset from './components/Reset';
 import Forgot from './components/Forgot';
 import Checkout from './pages/Checkout';
@@ -52,6 +53,8 @@ class App extends Component {
                 }/>
               <Route exact path='/admin' component={AdminBoard} />
               <Route exact path='/reset/:tokenreset' render={ () => <Reset tokeReset={this.state.reset}/>} />
+
+              <Route exact path='/login' component={Board} />
 
               <Route exact path='/forgot' component={Forgot} />
               <Route exact path='/checkout' component={Checkout} />

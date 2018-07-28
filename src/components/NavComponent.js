@@ -27,7 +27,7 @@ class NavComponent extends React.Component {
           }
 
 handleLogout = event => {
-      localStorage.removeItem('token');
+      localStorage.clear();
      
 
   
