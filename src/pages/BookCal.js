@@ -5,9 +5,9 @@ import BookInfo from '../components/BookInfo';
 import {Row, Col} from 'reactstrap';
 import { withRouter } from 'react-router';
 import axios from 'axios'
-// const url = 'https://calendar-booking-api.herokuapp.com'
+const url = 'https://calendar-booking-api.herokuapp.com'
 
-const url = 'http://localhost:4000'
+// const url = 'http://localhost:4000'
 
 class BookCal extends Component {
   constructor(props){
@@ -31,9 +31,10 @@ class BookCal extends Component {
   selectBooking (day,month,year) {
     if (day !== undefined) {
     this.setState({
+      
       day: day,
-      month: month,
-      year: year,
+       month: month,
+        year: year,
       available: "Available Timeslot :"
 
     })

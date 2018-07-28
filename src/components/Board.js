@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Board.css";
 import axios from 'axios'
-// const url = 'https://calendar-booking-api.herokuapp.com'
-const url = 'http://localhost:4000'
+const url = 'https://calendar-booking-api.herokuapp.com'
+// const url = 'http://localhost:4000'
 
 
 export default class Board extends Component {
