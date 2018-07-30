@@ -1,14 +1,18 @@
 .headerBar {
   text-align: center;
   height: 5rem;
-  background-color: #3F4449;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
+ background-blend-mode: multiply,multiply;
+  
+  border-radius: 20px;
 }
-
+@import url('https://fonts.googleapis.com/css?family=Sacramento');
 .headerLogo {
-  font-family:  'Alegreya', serif;
-  font-style: italic;
+
+font-family: 'Sacramento', cursive;
+outline-offset: black;
   font-weight: 400;
-  font-size: 3rem;
+  font-size: 4rem;
   color: #F7FBFF;
 }
 

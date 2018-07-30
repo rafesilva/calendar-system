@@ -1,69 +1,9 @@
-// import React, { Component } from "react";
-// import { Form, Button, FormGroup, Input, Label, Container, Row, Col } from "reactstrap";
-// export default class SignUpForm extends Component {
-//   constructor() {
-//     super();
-//       this.handleSubmit = this.handleSubmit.bind(this);
-//     }
-    
-//     handleSubmit(e) {
-      
-//       e.preventDefault();
-//       const data = new FormData(this.handleSubmit);
-
-//       fetch('http://localhost:8081/signup', {
-//         method: 'POST',
-//         body: data,
-//       });
-//     }
-    
-//     render() {
-//       return (
-
-//       <Container>
-//         <Row>
-//         <Col sm="12" md={{ size: 20 }}>
-//         <h1>Register</h1>
-//         <Form onSubmit={this.handleSubmit}>
-//         <FormGroup>
-//         <Label> Name </Label> 
-//         <Input type="text" name="name"  />
-//         </FormGroup>
-        
-
-//         <FormGroup>
-//         <Label> Password </Label>
-//         <Input type="password" name="password"  />
-//         </FormGroup>
-       
-//         <FormGroup>
-//         <Label> Email </Label>
-//         <Input type="text" name="email"  />
-//         </FormGroup>
-
-//         <FormGroup>
-//         <Label> Phone Number </Label>
-//         <Input type="text" name="phnumber"  />
-//         </FormGroup>
-        
-        
-//         <Button type="submit">Submit </Button>
-
-//         </Form>
-//         </Col>
-//         </Row>
-        
-//       </Container>
-//       );
-//     }
-//   }
-
-
-  
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./Board.css";
+
+import "./Login.css";
 import axios from 'axios'
+
 const url = 'https://calendar-booking-api.herokuapp.com'
 // const url = 'http://localhost:4000'
 
@@ -74,12 +14,12 @@ export default class SignUp extends Component {
 
     this.state = {
       
-      email_s: "",
-      password_s: "",
-	  confirm_password_s: "",
+      email_s: String,
+      password_s: String,
+  	  confirm_password_s: String,
       phone_s: Number,
-      name_s: "",
-      user_s: "",
+      name_s: String,
+      user_s: String,
 
       
       token: String,
@@ -106,21 +46,20 @@ validateFormSignup() {
     event.preventDefault();
 
      const newValidation = Object.assign({}, this.state, {
-        email: this.state.email_s,
-        password: this.state.password_s,
+      email: this.state.email_s,
+      password: this.state.password_s,
 	    name: this.state.name_s,        
 	    phone: this.state.phone_s,
 	    username: this.state.user_s
-
         
-      });
+  });
 
 
 
     axios.post(url+'/user/signup', newValidation )
-    .then(res => {
+      .then(res => {
 
-     console.log('SIGNUP DATA:', res)
+      console.log('SIGNUP DATA:', res)
       window.alert('YOU SUCCESFULLY SIGN UP')
 
       })

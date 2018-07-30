@@ -2,33 +2,32 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, CardBody, Card} from 'reactstrap';
 import axios from 'axios';
-// const url = 'http://localhost:4000'
-const url = 'https://calendar-booking-api.herokuapp.com'
+
+const url = 'http://localhost:4000'
+// const url = 'https://calendar-booking-api.herokuapp.com'
 
 class BookInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // day: "",
-            // month: "",
-            // year: "",
-            // duration: "",
             selectedTime: "Not Selected",
             isActive: true, 
             collapse: false
-            //productName: "",
-            //price:""
+    
+    
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     change(e){
+    
         this.setState({
             [e.target.name]: e.target.value
         })
     }
     
     onSubmit(){
+    
         this.setState({
             day: this.props.day,
             month: this.props.month,
@@ -41,11 +40,12 @@ class BookInfo extends Component {
     }
     
     selectTime(e){
+    
         this.setState({
             selectedTime: e.target.value,
             isActive: false
         })
-        console.log(this.state.selectedTime)
+        
     }
     
     onChangeDay(){
@@ -54,26 +54,29 @@ class BookInfo extends Component {
     }
 
     postOrder() {
-        const token = localStorage.getItem('token');
-
-        let config = {
-          headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token  },
-        }   
-          let newData = {
-            _id: this.props._id,
-              productName: this.props.productName,
-              price: this.props.price,
-              time:this.state.selectedTime,
-              duration: this.props.duration
-          }
-                localStorage.setItem('binfo', JSON.stringify(newData))
+    
+    const token = localStorage.getItem('token');
+    
+    let config = {
+          headers: { 
+            'Content-Type':'application/json', 'Authorization':'Bearer '+token  },
+    }   
+    
+    let newData = {
+        _id: this.props._id,
+        productName: this.props.productName,
+        price: this.props.price,
+        time:this.state.selectedTime,
+        duration: this.props.duration
+    }
+        localStorage.setItem('binfo', JSON.stringify(newData))
 
           
- axios.post(url+'/times', newData, config)
+    axios.post(url+'/times', newData, config)
         .then((res) => { 
-          console.log('Time created: ', res.data);
+        console.log('Time created successfuly: ', res.data);
 
-          const newTime = Object.assign({}, this.state, { 
+        const newTime = Object.assign({}, this.state, { 
             timeId: res.data.createdTime._id,
             date: this.props.day,
             month: this.props.month, 
@@ -81,37 +84,31 @@ class BookInfo extends Component {
           })
 
 
-          axios.post(url+'/dates', newTime)
-          .then((res) => { 
+        axios.post(url+'/dates', newTime)
+            .then((r) => { 
 
-            console.log('Date created: ', res.data);
-            window.alert('Booked', res)
-            return window.location.href='/checkout'
+            window.alert('Booked')
+            window.location.href='/checkout'
  
           })
-          .catch((err) => {console.log('err',err)})
+            .catch(Error)
         })
-        
+    .catch(Error)
       }
 
-render(){
+    render(){
     
-    
-    let day = this.props.day
-    let timeslot = this.props.timeslot
-    let month = this.props.month
-    let year = this.props.year
-    let duration = this.props.duration
-    let id = this.props._id
+        let day = this.props.day
+        let timeslot = this.props.timeslot
+        let month = this.props.month
+        let year = this.props.year
+        let duration = this.props.duration
+        let id = this.props._id
 
-    let productName = this.props.productName
-    let price = this.props.price
-    let available = this.props.available
-
-
-    
-    
-    
+        let productName = this.props.productName
+        let price = this.props.price
+        let available = this.props.available
+        
     return (
     <Card>
 
@@ -132,18 +129,17 @@ render(){
                 <Col style={{textAlign: 'left'}}>
                     <p>{available}</p>
                     {timeslot.map(x => 
-                        <Button outline color="secondary" style={{width:100}} value={x}  onClick={e => this.selectTime(e)}> {x} </Button>
+                        <Button outline color="secondary" style={{width:100}} value={x} onClick={e => this.selectTime(e)}> {x} </Button>
                     )}
                 </Col>
                 
             </Row>
+           
             </CardBody>
     
     </Card>   
-    )
+    )}
 }
-}
-
 
 
 

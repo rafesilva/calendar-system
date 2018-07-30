@@ -3,38 +3,36 @@ import "./Day.css";
 import axios from "axios";
 // import PropTypes from "prop-types";
   
-// const url = 'http://localhost:4000'
- 
-const url = 'https://calendar-booking-api.herokuapp.com'
+const url = 'http://localhost:4000'
+// const url = 'https://calendar-booking-api.herokuapp.com'
 
 function Day(props) {
     
-function onDelete() {
-      
+function onDelete() {    
 
       const token = localStorage.getItem('token');
-
       const dateId = props._id; 
       let config = {
    
-    headers: { 'Access-Control-Allow-Origin': '*', 
-    'Content-Type':'application/json', 
-    'Authorization':'Bearer '+token  },
-  }
+      headers: { 'Access-Control-Allow-Origin': '*', 
+            'Content-Type':'application/json', 
+            'Authorization':'Bearer '+token  },
+      }
+
       axios.delete(url+'/dates/'+dateId, config )
       .then(res => {
-         window.alert('Deleted', res)
-         return window.location.reload();      
+        
+         window.alert('Deleted successfully', res)
+         window.location.reload();      
       })
       .catch(Error)
-
-}
+  }
 
   return (
 
- <div className="date">
+   <div className="date">
             <br />
- <label>Day </label>
+   <label>Day </label>
    <div className="props">{props.date}</div>
    <label>Month </label>
     <div className="props">{props.month}</div>
@@ -56,9 +54,9 @@ function onDelete() {
 
           <label>DAY ID </label>
           <div className="props">{props._id}</div>
- <br />
+    <br />
 
- </div>
+   </div>
 
  );
 }

@@ -24,9 +24,9 @@ const items = [
   }
 ];
 
-const CarouselComponent = () => <Jumbotron>
+const CarouselComponent = () => <div className='board'><Jumbotron>
 <UncontrolledCarousel items={items} />
-</Jumbotron>;
+</Jumbotron></div>;
 
 export default CarouselComponent;
 

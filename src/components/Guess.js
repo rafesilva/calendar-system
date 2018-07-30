@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./Board.css";
+
+import "./Login.css";
 import axios from 'axios'
+
 const url = 'https://calendar-booking-api.herokuapp.com'
 // const url = 'http://localhost:4000'
 
@@ -12,14 +14,13 @@ export default class Guess extends Component {
 
     this.state = {
       
-      email_s: "",
-      password_s: "",
-  	  confirm_password_s: "",
+      email_s: String,
+      password_s: String,
+  	  confirm_password_s: String,
       phone_s: Number,
-      name_s: "",
-      user_s: "",
+      name_s: String,
+      user_s: String,
 
-      
       token: String,
       tokenPresent: Boolean,
 	    isAdmin: Boolean
@@ -44,13 +45,12 @@ validateFormSignup() {
     event.preventDefault();
 
      const newValidation = Object.assign({}, this.state, {
-        email: this.state.email_s,
-        password: this.state.password_s,
+      email: this.state.email_s,
+      password: this.state.password_s,
 	    name: this.state.name_s,        
 	    phone: this.state.phone_s,
 	    username: this.state.user_s
-
-        
+  
       });
 
 
@@ -122,9 +122,7 @@ validateFormSignup() {
           </Button>
           
           </form>
-
-       
-       
+      
       </div>
       </div>
     );
