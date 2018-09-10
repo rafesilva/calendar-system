@@ -14,7 +14,6 @@ import Reset from './components/Reset';
 import Forgot from './components/Forgot';
 import Checkout from './pages/Checkout';
 
-
 import BookCal from './pages/BookCal';
 import SignUpForm from './components/SignUpForm';
 import NoMatch from './components/NoMatch';

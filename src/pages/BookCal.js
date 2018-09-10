@@ -87,9 +87,9 @@ class BookCal extends Component {
             const time = t[0].time.time
             console.log('time', time)
             this.setState({used: time})
-                    let duration = this.props.match.params.serviceDuration
+                    // let duration = this.props.match.params.serviceDuration
 
-        let db = [this.state.used]     
+        // let db = [this.state.used]     
        const used = [this.state.used]        
        let timesAll = [9,9.30,10,10.30,11,11.30,12,12.30,13,13.30,14,14.30,15,15.30,16,
                         16.30,17,17.30,18,18.30,19,19.30,20,21]
@@ -147,7 +147,7 @@ class BookCal extends Component {
 // function to pick the date in calendar
   onDatePicked = (d) => {
 
-          let duration = this.props.match.params.serviceDuration
+          // let duration = this.props.match.params.serviceDuration
           let date = new Date(d);
           let year = date.getFullYear();
           let month = date.getMonth() + 1;

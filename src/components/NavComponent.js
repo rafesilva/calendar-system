@@ -64,9 +64,6 @@ handleLogout = event => {
                 <NavItem>
                   <NavLink href="">Blog</NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink href="/signup">SignUp</NavLink>
-                </NavItem>
                  <div className={this.state.shouldHide ? 'hidden' : ""}>
                  <NavItem>
                   <NavLink href="/admin">Admin</NavLink>

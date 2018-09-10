@@ -1,0 +1,29 @@
+
+  .board {
+  	width: 600px;
+  	border: 2px solid #a4a8b0;
+  	background: white;
+  box-shadow: -7px 42px 38px 15px rgba(0,0,0,0.52);
+
+  }
+
+
+  .SignUp {
+    
+    display: inline-grid;
+
+    }
+
+
+  span {
+
+    display: inline-flex;
+    
+    }
+
+
+  .Separator {
+    width: 100px;
+
+    }
+

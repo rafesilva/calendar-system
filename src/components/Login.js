@@ -38,6 +38,12 @@ export default class Login extends Component {
   }
 
 
+  handleSignUp = event => {
+      
+  window.location.href='/signup';
+
+  };
+
   handleForgot = event => {
       
   window.location.href='/forgot';
@@ -67,7 +73,7 @@ export default class Login extends Component {
           localStorage.setItem('uinfo', JSON.stringify(userData))
 
           console.log('userData', userData)
-          window.location.href = '/board/';
+          window.location.href = '/login/';
 
           })
         .catch(Error)  
@@ -82,9 +88,10 @@ export default class Login extends Component {
     return (
       <div className="board">
       <div className="Login">
+        <label>Login</label>
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" bsSize="large">
-          <label>Login</label>
+        
 
           <br />
 
@@ -112,7 +119,7 @@ export default class Login extends Component {
           />
 
           </FormGroup>
-
+      <br />
           <Button
             block
             bsSize="large"
@@ -121,6 +128,15 @@ export default class Login extends Component {
           >
             Login
           </Button>
+        <br />
+        <Button
+            
+            bsSize="large"
+            type="button" onClick={this.handleSignUp}
+          >
+          SignUp
+        </Button>
+        <br />
         <Button
             
             bsSize="large"

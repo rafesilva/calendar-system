@@ -1,9 +1,7 @@
 @media all and (min-width: 480px) {
 .form {
 	border-radius: 10px;
-	
- 	background-color: #f2f5f5;
-	
+		
 	display: flex;
 	-webkit-box-shadow: 4px -5px 44px 14px rgba(0,0,0,0.55);
 	-moz-box-shadow: 4px -5px 44px 14px rgba(0,0,0,0.55);

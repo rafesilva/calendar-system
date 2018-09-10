@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import "./Login.css";
+import "./SignUpForm.css";
 import axios from 'axios'
 
-const url = 'https://calendar-booking-api.herokuapp.com'
-// const url = 'http://localhost:4000'
+// const url = 'https://calendar-booking-api.herokuapp.com'
+const url = 'http://localhost:4000'
 
 
 export default class SignUp extends Component {
@@ -30,17 +30,15 @@ export default class SignUp extends Component {
   }
 
 
-validateFormSignup() {
+  validateFormSignup() {
     return this.state.email_s.length > 0 && this.state.password_s.length > 0;
   }
-
 
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   }
-
 
    handleSubmitSignUp = event => {
     event.preventDefault();
@@ -53,8 +51,6 @@ validateFormSignup() {
 	    username: this.state.user_s
         
   });
-
-
 
     axios.post(url+'/user/signup', newValidation )
       .then(res => {
@@ -71,13 +67,13 @@ validateFormSignup() {
       <div className="board">
       
         <div className="SignUp">
-      
+       <label>Signup</label>
         <form onSubmit={this.handleSubmitSignUp}>
+          
+          <span>
           <FormGroup controlId="user_s" bsSize="large">
-          <label>Signup</label>
+         <ControlLabel>Username</ControlLabel>
           <br />
-               <ControlLabel>Username</ControlLabel>
-            <br />
 
             <FormControl
               autoFocus
@@ -87,9 +83,10 @@ validateFormSignup() {
             />
             
           </FormGroup>
-        <FormGroup controlId="email_s" bssize="large">
-            <ControlLabel>Email</ControlLabel>
-            <br />
+          <div className="Separator"></div>
+                  <FormGroup controlId="email_s" bssize="large">
+          <ControlLabel>Email</ControlLabel>
+          <br />
 
             <FormControl
               autoFocus
@@ -99,46 +96,67 @@ validateFormSignup() {
             />
             
           </FormGroup>
+          </span>
+          
+          <span>
           <FormGroup controlId="password_s" bssize="large">
-            <ControlLabel>Password</ControlLabel>
-            <br />
-            <FormControl
+          
+          <ControlLabel>Password</ControlLabel>
+          <br />
+          
+          <FormControl
               value={this.state.password_s}
               onChange={this.handleChange}
               type="password"
             />
+          
           </FormGroup>
-            <FormGroup controlId="confirm_password_s" bssize="large">
-            <ControlLabel>Confirm Password</ControlLabel>
-            <br />
-            <FormControl
+                   <div className="Separator"></div>
+
+          <FormGroup controlId="confirm_password_s" bssize="large">
+          <ControlLabel>Confirm Password</ControlLabel>
+          <br />
+          
+          <FormControl
               value={this.state.confirm_s}
               onChange={this.handleChange}
               type="password"
             />
           </FormGroup>
-            <FormGroup controlId="name_s" bsSize="large">
-        
-          <br />
-               <ControlLabel>Full name</ControlLabel>
-            <br />
+          </span>
 
-            <FormControl
+          <span>
+          <FormGroup controlId="name_s" bsSize="large">
+        
+           <ControlLabel>Full name</ControlLabel>
+          <br />
+
+          <FormControl
               autoFocus
               type="string"
               value={this.state.name_s}
               onChange={this.handleChange}
             />
-            </FormGroup>
+          
+
+          </FormGroup>
+                 <div className="Separator"></div>
+
             <FormGroup controlId="phone_s" bssize="large">
             <ControlLabel>Phone</ControlLabel>
             <br />
-            <FormControl
+            
+          <FormControl
               value={this.state.phone_s}
               onChange={this.handleChange}
               type="number"
             />
+          
           </FormGroup>
+          </span>
+          
+          </form>
+
           <Button
             block
             bssize="large"
@@ -146,12 +164,11 @@ validateFormSignup() {
             type="button" onClick={this.handleSubmitSignUp}
           >
             SignUp
-          </Button>
-          </form>
 
-       
-       
-      </div>
+          </Button>
+          
+
+        </div>
       </div>
     );
   }
