@@ -5,17 +5,18 @@ function UserList(props) {
 
   return (
 
- <div>
+    <div>
       {
-              props.users.map((user, u) => 
+        props.users.map((user, u) => 
 
         <User _id={user._id} 
-        username={user.username} 
-        name={user.name} 
-        phone={user.phone} 
-        email={user.email}/>
-
-      )}
+            username={user.username} 
+            name={user.name} 
+            phone={user.phone} 
+            email={user.email}
+        />
+        )
+      }
         
      </div> 
   ); 

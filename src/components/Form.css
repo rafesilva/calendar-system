@@ -1,39 +1,31 @@
 @media all and (min-width: 480px) {
-.form {
-	border-radius: 10px;
-		
-	display: flex;
-	-webkit-box-shadow: 4px -5px 44px 14px rgba(0,0,0,0.55);
-	-moz-box-shadow: 4px -5px 44px 14px rgba(0,0,0,0.55);
-	box-shadow: 4px -5px 44px 14px rgba(0,0,0,0.55);
 
-}
+	.form {
+		border-radius: 10px;
+		/*box-shadow: 4px -5px 44px 14px rgba(0,0,0,0.55);*/
+	}
+	.select {
+		margin: 10px;
+		border: 0.3px solid white;
+		font-size: 1em;
+	}
+	.label {
+		margin: 10px;
+		border: 0.3px solid white;
+		font-size: 1em;
+	}
 
-.label {
-
-	margin: 10px;
-	border: 0.3px solid white;
-	font-size: 1em;
-}
-
-.select {
-
-	margin: 10px;
-	border: 0.3px solid white;
-	font-size: 1em;
-}
-
-.submit {
-
-	margin: 10px;
-	border: 0.3px solid gray;
-	font-size: 1em;
-}
+	
+	.submit {
+		width: 20em;
+		margin: 1em;
+		border: 0.3px solid gray;
+		font-size: 1em;
+	}
 
 
-.hidden { 
+	.hidden { 
+	  	display:none; 
 
-  display:none; 
-
-  }
+	}
 }

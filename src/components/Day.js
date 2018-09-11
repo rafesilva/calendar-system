@@ -15,8 +15,8 @@ function onDelete() {
       let config = {
    
       headers: { 'Access-Control-Allow-Origin': '*', 
-            'Content-Type':'application/json', 
-            'Authorization':'Bearer '+token  },
+                  'Content-Type':'application/json', 
+                    'Authorization':'Bearer '+token  },
       }
 
       axios.delete(url+'/dates/'+dateId, config )

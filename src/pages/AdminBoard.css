@@ -1,40 +1,13 @@
 @media all and (min-width: 480px) {
 
-.DayList {
+	.board {
+		display: flex;
+	}
 
+	.hidden { 
 
+	  display:none; 
 
+	}
 
-  }
-
-.Form {
-
-border-radius: 30px;
--webkit-box-shadow: inset -1px 18px 17px 17px rgba(148,148,148,0.48);
--moz-box-shadow: inset -1px 18px 17px 17px rgba(148,148,148,0.48);
-box-shadow: inset -1px 18px 17px 17px rgba(148,148,148,0.48);
-
-}
-
-.board {
-
-
-
-}
-
-.hidden { 
-
-  display:none; 
-
-  }
-
-  .hidden2 { 
-
-  display:none; 
-
-  }
-.logout {
-
-
-}
 }
