@@ -23,6 +23,7 @@ import axios from 'axios';
 const url = 'http://localhost:4000'
 
 class App extends Component {
+  
   constructor(props){
     super(props)
     this.state = {
@@ -42,36 +43,36 @@ class App extends Component {
     return (
       <Router>
         <div className="app">
+
           <NavComponent />
 
-          <main className="mainWindow">
-            <Switch>
-              <Route exact path='/' component={CarouselComponent} />
-              <Route exact path='/about' component={About} />
-              <Route exact path='/booking/:serviceId/:serviceName/:serviceDuration/:servicePrice' render={
-                  () => <BookCal />
-                }/>
-              <Route exact path='/admin' component={AdminBoard} />
-              <Route exact path='/reset/:tokenreset' name="reset" component={Reset} />
+          <Switch>
 
-              <Route exact path='/login' component={Login} />
+            <Route exact path='/' component={CarouselComponent} />
+            <Route exact path='/about' component={About} />
+            <Route exact path='/booking/:serviceId/:serviceName/:serviceDuration/:servicePrice' render={
+                                                                                                  () => <BookCal />
+                                                                                                }/>
+            <Route exact path='/admin' component={AdminBoard} />
+            <Route exact path='/reset/:tokenreset' name="reset" component={Reset} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/forgot' component={Forgot} />
+            <Route exact path='/checkout' component={Checkout} />
+            <Route exact path='/user_board' component={UserBoard} />
+            <Route exact path='/signup' component={SignUpForm} />
+            <Route exact path='/service' render={
+                                          () => <Services services={this.state.services} />
+                                         }/>
+            <Route component={NoMatch} />
 
-              <Route exact path='/forgot' component={Forgot} />
-              <Route exact path='/checkout' component={Checkout} />
-               <Route exact path='/user_board' component={UserBoard} />
-              <Route exact path='/signup' component={SignUpForm} />
-              <Route exact path='/service' render={
-                  () => <Services services={this.state.services} />
-                }/>
-              <Route component={NoMatch} />
-            </Switch>
-          </main>
+          </Switch>
+
+
           <FooterComponent />
 
           </div>
       </Router>
-      
-    
+
     );
   }
 }

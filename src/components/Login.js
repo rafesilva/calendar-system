@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import axios from 'axios'
-// const url = 'https://calendar-booking-api.herokuapp.com'
-const url = 'http://localhost:4000'
+const url = 'https://calendar-booking-api.herokuapp.com'
+// const url = 'http://localhost:4000'
 
 
 export default class Login extends Component {
@@ -13,9 +13,7 @@ export default class Login extends Component {
     this.state = {
       email: String,
       password: String,
-      
       email_f: String,
-      
       token: String,
       tokenPresent: Boolean
     };
@@ -78,9 +76,7 @@ export default class Login extends Component {
           })
         .catch(Error)  
       })
-
     .catch(Error)  
-
   }
 
   render() {

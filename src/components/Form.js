@@ -1,297 +1,277 @@
-    import React from 'react';
-    import axios from 'axios';
-    import "./Form.css"
+import React from 'react';
+import axios from 'axios';
+import "./Form.css"
+
     // const url = 'http://localhost:4000'
-
     const url = 'https://calendar-booking-api.herokuapp.com'
-    export default class Form extends React.Component {
 
+export default class Form extends React.Component {
 
-      constructor(props) {
-        super(props);
-        this.state = {
-          time: Number,
-          duration: Number,
-          description: String,
-          date: Number,
-          month: Number,
-          year: Number,
-          dayId: String,
-          used: [],
-          token: String
-        };
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      time: Number,
+      duration: Number,
+      description: String,
+      date: Number,
+      month: Number,
+      year: Number,
+      dayId: String,
+      used: [],
+      token: String
+    };
+  }
 
-      }
+componentWillMount() {
 
-      onChange = e => {
+   const token = localStorage.getItem('token');
 
-        
+   let config = {
 
-        const value = e.target.value;
-        const name = e.target.name;
+    headers: { 'Access-Control-Allow-Origin': '*', 
+    'Content-Type':'application/json', 
+    'Authorization':'Bearer '+token  },
+  }      
 
-        if (name === 'date') { this.setState({ date: value } )} 
-        if (name === 'month') { this.setState({month: value} )}
-        if (name === 'year') { this.setState({year: value} )}
-
-       
-
-        console.log('object name', e.target.name)
-        console.log('object value', e.target.value)
-
-
+  axios.get(url+'/dates', config )
+  .then( response => {
+    const newDays = response.data.days.map((day, d) => {
+      console.log('new days', response)
+      return {
+        _id: day._id,
+        date: day.date,
+        month: day.month,
+        year: day.year,
+        time: day.time.time,
+        description: day.time.description,
+        duration: day.time.duration
       };
+    });
 
-      onChangeForm = e => {
+    const newState = Object.assign({}, this.state, {
+      days: newDays
+    });
 
-       const target = e.target;
-       const value = target.value;
-       const name = target.name;
-       this.setState({ [name]: value });
-     }
+    this.setState(newState);
+  })
+  .catch(error => console.log('FORM COULD NOT GET', error))
 
-      onTime = e => {
+}
 
-        const token = localStorage.getItem('token');
+  onChange = e => {
 
-        let config = {
-          headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token  },
-        }   
+    const value = e.target.value;
+    const name = e.target.name;
 
-         axios.get(url+'/dates/' + this.state.date + "/"  + this.state.month + "/" + this.state.year, config )
-        .then( (res) => {   
+    if (name === 'date') { this.setState({ date: value } )} 
+    if (name === 'month') { this.setState({month: value} )}
+    if (name === 'year') { this.setState({year: value} )}
 
-          const times = res.data.day.map(day => day.time.time)
-          console.log({ 'res.data': res.data })
-          console.log('used', this.state.used )
+    console.log('object name', e.target.name)
+    console.log('object value', e.target.value)
 
-       return  this.setState({date:this.state.date, month:this.state.month, year: this.state.year, used: times })
+  };
 
+  onChangeForm = e => {
 
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({ [name]: value });
+  };
 
-        })
+  onTime = e => {
 
-        .catch( res => {
+    let token = localStorage.getItem('token');
+    let config = {
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token  },
+    }   
 
-          console.log(res)
-          this.setState()
-        })
-      }
+    axios.get(url+'/dates/' + this.state.date + "/"  + this.state.month + "/" + this.state.year, config )
+      .then( (res) => {   
 
-       onChangeTime = e => {
+        let times = res.data.day.map(day => day.time.time)
+        console.log({ 'res.data': res.data })
+        console.log('used', this.state.used )
 
-        const target = e.target
-        const value = target.value
-        this.setState({time: value});
+          return  this.setState({date:this.state.date, month:this.state.month, year: this.state.year, used: times });
 
-        }
-
-       onSubmit = e => {
-
-        e.preventDefault();
-        const token = localStorage.getItem('token');
-
-        let config = {
-
-          headers: {  'Access-Control-Allow-Origin': '*', 
-          'Content-Type':'application/json', 
-          'Authorization':'Bearer '+token  },
-        }    
-        const newData = Object.assign({}, this.state, {
-          time: this.state.time,
-          duration: this.state.duration, 
-          description: this.state.description
-
-        });
-        
-        axios.post(url+'/times', newData, config)
-        .then((res) => { 
-
-          console.log('state time', newData)
-          console.log('Time created: ', res.data);
-
-          const newTime = Object.assign({}, this.state, { 
-            timeId: res.data.createdTime._id,
-            date: this.state.date,
-            month: this.state.month, 
-            year: this.state.year
-          })
-
-
-          axios.post(url+'/dates', newTime)
-          .then((res) => { 
-
-            console.log('Data created: ', res.data);
-            window.alert('Booked', res)
-            return window.location.reload(); 
-
-          })
-          .catch((err) => {console.log('err',err)})
-        })
-        
-
-        .catch((err) => 
-          {console.log('err',err)
-
-        });
-      }
-
-
-      componentWillMount() {
-
-       const token = localStorage.getItem('token');
-
-       let config = {
-
-        headers: { 'Access-Control-Allow-Origin': '*', 
-        'Content-Type':'application/json', 
-        'Authorization':'Bearer '+token  },
-      }      
-
-      axios.get(url+'/dates', config )
-      .then( response => {
-        const newDays = response.data.days.map((day, d) => {
-        	console.log('new days', response)
-          return {
-            _id: day._id,
-            date: day.date,
-            month: day.month,
-            year: day.year,
-            time: day.time.time,
-            description: day.time.description,
-            duration: day.time.duration
-          };
-        });
-
-        const newState = Object.assign({}, this.state, {
-          days: newDays
-        });
-
-        this.setState(newState);
       })
-      .catch(error => console.log('FORM COULD NOT GET', error))
+      .catch( res => {
+        console.log(res)
+        this.setState()
 
-    }
+      })
+  };
 
-    render () {
+  onChangeTime = e => {
 
-      const used = this.state.used        
-      const arrayTime = ['TT',9,10,11,12,13,14,15,16,17,18,19,20,21];
+    const target = e.target
+    const value = target.value
+    this.setState({time: value});
+
+  }
+
+  onSubmit = e => {
+
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+
+    let config = {
+
+      headers: {  'Access-Control-Allow-Origin': '*', 
+      'Content-Type':'application/json', 
+      'Authorization':'Bearer '+token  },
+    }    
+
+    const newData = Object.assign({}, this.state, {
+      time: this.state.time,
+      duration: this.state.duration, 
+      description: this.state.description
+
+    });
+    
+    axios.post(url+'/times', newData, config)
+    .then((res) => { 
+
+      console.log('state time', newData)
+      console.log('Time created: ', res.data);
+
+      const newTime = Object.assign({}, this.state, { 
+        timeId: res.data.createdTime._id,
+        date: this.state.date,
+        month: this.state.month, 
+        year: this.state.year
+      })
+
+      axios.post(url+'/dates', newTime)
+      .then((res) => { 
+
+        console.log('Data created: ', res.data);
+        window.alert('Booked', res)
+        return window.location.reload(); 
+
+      })
+        .catch((err) => {console.log('err',err)})
+      })
+      .catch((err) => {console.log('err',err)
+
+    });
+  }
 
 
-      const timesUsed = arrayTime.filter((times) => {
-        return used.indexOf(times) === -1;
-      });
+render () {
 
-          ///DAY
-          const arrayDay = function range(start, count) {
+  const used = this.state.used        
+  const arrayTime = ['TT',9,10,11,12,13,14,15,16,17,18,19,20,21];
+  const timesUsed = arrayTime.filter((times) => {
 
-            return Array.apply(null, Array(count))
-            .map(function (element, index) { 
+    return used.indexOf(times) === -1;
 
-             if (index === 0) { return "DD"}else{ return index + start; }
+  });
 
-           })}
+      ///DAY
+      const arrayDay = function range(start, count) {
 
-          ///MONTH
-          const arrayMonth = function range(start, count) {
+        return Array.apply(null, Array(count))
+        .map(function (element, index) { 
 
-            return Array.apply(null, Array(count))
-            .map(function (element, index) { 
+         if (index === 0) { return "DD"}else{ return index + start; }
 
-             if (index === 0) { return "MM"}else{ return index + start; }
+       })
+      }
 
-           })}
-          ///YEAR
-          const arrayYear = function range(start, count) {
+      ///MONTH
+      const arrayMonth = function range(start, count) {
 
-            return Array.apply(null, Array(count))
-            .map(function (element, index) { 
+        return Array.apply(null, Array(count))
+        .map(function (element, index) { 
 
-             if (index === 0) { return "YY"}else{ return index + start; }
-             
-           });
-          }
+         if (index === 0) { return "MM"}else{ return index + start; }
 
-          console.log('Schedule TIMES', used)
+       })
+      }
 
-          console.log('Available TIMES: ', timesUsed)
+      ///YEAR
+      const arrayYear = function range(start, count) {
 
-          console.log('Available States: ', this.state)
+        return Array.apply(null, Array(count))
+        .map(function (element, index) { 
 
-          return (
+         if (index === 0) { return "YY"}else{ return index + start; }
+         
+       });
+      }
 
-            <form className='form' >
+      console.log('Schedule TIMES', used)
+      console.log('Available TIMES: ', timesUsed)
+      console.log('Available States: ', this.state)
 
-            <label className="label">Date</label>
+      return (
 
-            <select className="select" value={this.state.value} name="date" onChange={this.onChange}>  
+      <form className='form' >
 
-            {arrayDay(0,32).map(dates => 
-             <option value={dates} > {dates} </option>
-             )}          
+        <label className="label">Date</label>
 
-             </select>
-             <br />
-             <label className="label">Month</label>
+        <select className="select" value={this.state.value} name="date" onChange={this.onChange}>  
 
-             <select className="select" value={this.state.value} name="month" onChange={this.onChange}>  
+          {arrayDay(0,32).map(dates => 
+            <option value={dates} > {dates} </option>
+          )}          
 
-             {arrayMonth(0,13).map(months => 
-               <option value={months} >{months} </option>
-               )}           
+        </select>
+        <label className="label">Month</label>
 
-               </select>
-               <br />
+        <select className="select" value={this.state.value} name="month" onChange={this.onChange}>  
 
-               <label className="label">Year</label>
+          {arrayMonth(0,13).map(months => 
+            <option value={months} >{months} </option>  
+          )}           
 
-               <select className="select" value={this.state.value} name="year" onChange={this.onChange}>  
+        </select>
 
-               {arrayYear(2017,4).map(years => 
-                 <option value={years} > {years} </option>
-                 )}           
+        <label className="label">Year</label>
 
-                 </select>
-                 <br />
-                 <label className="label">Time</label>
+        <select className="select" value={this.state.value} name="year" onChange={this.onChange}>  
 
-                 <select className="select" value={this.state.value} name="time" onClick={this.onTime} onChange={this.onChangeTime}>  
+          {arrayYear(2017,4).map(years => 
+            <option value={years} > {years} </option>
+          )}           
 
-                 {timesUsed.map(times => 
-                   <option value={times} > {times} </option>
-                   )}           
+        </select>
+        <label className="label">Time</label>
 
-                   </select>
+        <select className="select" value={this.state.value} name="time" onClick={this.onTime} onChange={this.onChangeTime}>  
 
-                   <br />
+          {timesUsed.map(times => 
+            <option value={times} > {times} </option>
+          )}           
 
-                   <label className="label">Duration</label>
-                   <input 
-                   name="duration"
-                   type="number" 
-                   value={this.state.duration} 
-                   onChange={this.onChangeForm} />
+        </select>
 
-                   <br />
+        <label className="label">Duration</label>
+          <input 
+            name="duration"
+            type="number" 
+            value={this.state.duration} 
+            onChange={this.onChangeForm} 
+          />
 
-                   <label className="label">Description</label>
-                   <input 
-                   name="description"
-                   type="text" 
-                   value={this.state.description} 
-                   onChange={this.onChangeForm} />
+        <label className="label">Description</label>
+          <input 
+            name="description"
+            type="text" 
+            value={this.state.description} 
+            onChange={this.onChangeForm} 
+          />
 
-                   <br />
+        <input className="submit" type="submit" 
+            value="Book this day" onClick={this.onSubmit}/>
 
-                   <input className="submit" type="submit" 
-                   value="Book" onClick={this.onSubmit}/>
+      </form>
 
-                   <br />
-                   </form>
-
-                   )
-                 }
-
-               }
+    )}
+  }
 
